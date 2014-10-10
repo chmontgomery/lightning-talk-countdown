@@ -1,0 +1,7 @@
+{
+  "resources": {
+    "Frontend": {
+      "type": "node.app"
+    }
+  }
+}
