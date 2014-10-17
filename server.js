@@ -4,6 +4,10 @@ var express = require('express'),
 app.set('view options', {layout: false});
 app.use('/public', express.static(__dirname + '/public'));
 
+app.get('/', function (req, res) {
+  res.redirect('/public/index.html');
+});
+
 app.get('/_health', function (req, res) {
   res.send(200);
 });

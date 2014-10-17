@@ -11,17 +11,37 @@
 <div class="your-clock"></div>
 
 <div style="margin-left: 15px;">
-  <button type="button" id="start" class="btn btn-success btn-lg">
-    <span class="glyphicon glyphicon-play"></span>
-  </button>
 
-  <button type="button" id="stop" class="btn btn-default btn-lg">
-    <span class="glyphicon glyphicon-stop"></span>
-  </button>
+  <div id="editGroup" style="display: none;">
+    <input id="editTime" type="text" placeholder="8:33">
+    <div class="btn-group">
+      <button type="button" class="btn btn-success" id="saveEdit">
+        <span class="glyphicon glyphicon-saved"></span>
+      </button>
+      <button type="button" class="btn btn-danger" id="cancelEdit">
+        <span class="glyphicon glyphicon-remove"></span>
+      </button>
+    </div>
+    <br>
+    <br>
+  </div>
 
-  <button type="button" id="restart" class="btn btn-warning btn-lg">
-    <span class="glyphicon glyphicon-repeat"></span>
-  </button>
+  <div class="btn-group btn-group-lg">
+    <button type="button" id="restart" class="btn btn-success">
+      <span class="glyphicon glyphicon-repeat"></span>
+      <span class="glyphicon glyphicon-play"></span>
+    </button>
+    <button type="button" id="stop" class="btn btn-default">
+      <span class="glyphicon glyphicon-pause"></span>
+    </button>
+    <button type="button" id="start" class="btn btn-default">
+      <span class="glyphicon glyphicon-play"></span>
+    </button>
+    <button type="button" id="edit" class="btn btn-default">
+      <span class="glyphicon glyphicon-edit"></span>
+    </button>
+  </div>
+
 </div>
 
 <script src="/public/jquery/jquery.min.js"></script>
@@ -49,7 +69,27 @@
       clock.setTime(600);
       clock.start();
     });
-
+    $('#edit').click(function() {
+      $('#editGroup').slideToggle();
+    });
+    $('#saveEdit').click(function() {
+      var newVal = $('#editTime').val();
+      var timeParts = newVal.split(':');
+      var min = parseInt(timeParts[0], 10);
+      var sec = parseInt(timeParts[1], 10);
+      var newSeconds = (min * 60) + sec;
+      if (isNaN(newSeconds)) {
+        alert('Invalid time supplied. Must be in the form "minutes":"seconds"');
+      } else {
+        $('#editGroup').slideToggle();
+        clock.setTime(newSeconds);
+        $('#editTime').val('');
+      }
+    });
+    $('#cancelEdit').click(function() {
+      $('#editGroup').slideToggle();
+      $('#editTime').val('');
+    });
   });
 </script>
 </body>
